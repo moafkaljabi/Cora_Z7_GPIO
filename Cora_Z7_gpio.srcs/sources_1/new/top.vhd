@@ -44,11 +44,39 @@ end top;
 architecture Structural of top is
 
     -- Signals
+    signal brightness   : std_logic;
+    signal db_btn       : std_logic_vector(1 downto 0)
+    signal cd_count     : unsigned(25 dwonto 0) := ('others => '0');
+    signal led_shift    : std_logic_vector(3 downto 0) := "0001";
 
+    constant CD_COUNT_MAX : integer := 125000000/2;
 
 begin
 
-    -- processes 
+    ---------------processes and instances---------------
+
+
+    ------------------------------
+    --- PWM Instance
+    ------------------------------
+        
+
+
+    ------------------------------
+    --- LED Cycling at 2 Hz
+    ------------------------------
+
+
+
+    ------------------------------
+    --- RGB Outputs
+    ------------------------------
+
+
+
+    ------------------------------
+    --- Debounce
+    ------------------------------
 
 
 end Structural;
