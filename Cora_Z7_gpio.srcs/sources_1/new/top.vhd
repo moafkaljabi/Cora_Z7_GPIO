@@ -47,7 +47,7 @@ architecture Behavioral of top is
 
     signal brightness  : STD_LOGIC;
     signal db_btn      : STD_LOGIC_VECTOR(1 downto 0) := (others => '0');
-    signal btn_edge    : STD_LOGIC_VECTOR(1 downto 0) := (others => '0');  -- one-clock pulse on press
+    signal btn_edge    : STD_LOGIC_VECTOR(1 downto 0) := (others => '0');  -- one-clock pulse on press => one color change per press
     signal prev_btn    : STD_LOGIC_VECTOR(1 downto 0) := (others => '0');
 
     -- State for each LED: 0=Red, 1=Green, 2=Blue, 3=Off
@@ -102,8 +102,8 @@ begin
     debouncer_inst : debouncer
         generic map(
             WIDTH        => 2,
-            CLOCKS       => 1024,
-            CLOCKS_CLOG2 => 10
+            CLOCKS       => 1024, -- input stable for 1024 clock cycles ~ 8ms at 125 MHz
+            CLOCKS_CLOG2 => 10    -- number of bits needed to fit the value(in binary)
         )
         port map(
             clk  => clk,
@@ -117,7 +117,7 @@ begin
     process(clk)
     begin
         if rising_edge(clk) then
-            prev_btn <= db_btn;
+            prev_btn <= db_btn;                     -- Do not use Immediate assignment!
             btn_edge <= db_btn and (not prev_btn);  -- rising edge
         end if;
     end process;
